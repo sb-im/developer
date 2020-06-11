@@ -1,4 +1,6 @@
-# developer-center
-developer-center SBIM 的开发者必读！！！
+# developer
 
-https://github.com/SB-IM/developer-center/wiki
+developer-center
+
+https://sb-im.github.io/developer/
+
