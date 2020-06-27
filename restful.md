@@ -45,7 +45,21 @@ token_type   | string | [rfc6749#section-7.1](https://tools.ietf.org/html/rfc674
 expires_in   | uint | Expires in (s)
 created_at   | uint | 10 Timestamp
 
+### Base
+
+`BASE_URL` + api + auth header
+
+The `BASE_URL` default `http://localhost:8000/gosd`
+
+For example:
+
+```shell
+curl http://localhost:8000/gosd/api/v1/nodes/ -H "Authorization: Bearer 6b6e69e4e3166d3433bed7412bd3c2caf4fd6aebf7ae7b03834c8494e6c4cf27"
+```
+
 ### GetFullNodes
+
+GET `/api/v1/nodes/`
 
 ```shell
 curl http://localhost:8000/gosd/api/v1/nodes/ -H "Authorization: Bearer 6b6e69e4e3166d3433bed7412bd3c2caf4fd6aebf7ae7b03834c8494e6c4cf27"
@@ -74,4 +88,49 @@ curl http://localhost:8000/gosd/api/v1/nodes/ -H "Authorization: Bearer 6b6e69e4
   }
 ]
 ```
+
+Field | Type | Description
+----- | ---- | -----------
+id    | uint | Globally unique device id
+name  | string | Name
+description | string | Description
+points | array | How many features are available
+points.type   | string | Enum: reference SDWC
+points.params | object | reference SDWC
+
+### createPlan
+
+POST `/api/v1/plans/`
+
+```json
+{
+  "id":35,
+  "name":"233",
+  "description":"test",
+  "node_id":1,
+  "attachments": {
+    "file":"30"
+  }
+}
+```
+
+Field | Type | Description
+----- | ---- | -----------
+id    | uint | Globally unique plan id
+name  | string | Name
+description | string | Description
+node_id | uint | Run Plan node
+attachments | object | `map[string]string` key is type, value is `blob_id`
+
+### indexPlan
+
+GET `/api/v1/plans/`
+
+### destroyPlan
+
+DELETE `/api/v1/plans/:id/`
+
+### updatePlan
+
+PATCH `/api/v1/plans/:id/`
 
