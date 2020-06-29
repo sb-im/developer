@@ -1,6 +1,6 @@
 # gosd RESTful API
 
-## RESTful
+## Auth
 
 ### Oauth
 
@@ -57,6 +57,8 @@ For example:
 curl http://localhost:8000/gosd/api/v1/nodes/ -H "Authorization: Bearer 6b6e69e4e3166d3433bed7412bd3c2caf4fd6aebf7ae7b03834c8494e6c4cf27"
 ```
 
+## Node
+
 ### GetFullNodes
 
 GET `/api/v1/nodes/`
@@ -98,9 +100,23 @@ points | array | How many features are available
 points.type   | string | Enum: reference SDWC
 points.params | object | reference SDWC
 
+## Plan
+
 ### createPlan
 
 POST `/api/v1/plans/`
+
+FormData
+
+```sh
+curl -X POST -F "name=233" \
+	-F "description=test"
+	-F "node_id"=1 \
+	-F "file=@go.mod" \
+	localhost:8000/gosd/api/v1/plans
+```
+
+response
 
 ```json
 {
@@ -126,6 +142,29 @@ attachments | object | `map[string]string` key is type, value is `blob_id`
 
 GET `/api/v1/plans/`
 
+```json
+[
+  {
+    "id":1,
+    "name":"233",
+    "description":"",
+    "map_path":"/api/v1/blobs/1",
+    "node_id":1,
+    "cycle_types_id":0,
+    "attachments":{"file":"1"},
+    "extra":{}
+  },{
+    "id":2,
+    "name":"233","description":"",
+    "map_path":"/api/v1/blobs/2",
+    "node_id":1,
+    "cycle_types_id":0,
+    "attachments":{"file":"2"},
+    "extra":{}
+  }
+]
+```
+
 ### destroyPlan
 
 DELETE `/api/v1/plans/:id/`
@@ -133,4 +172,14 @@ DELETE `/api/v1/plans/:id/`
 ### updatePlan
 
 PATCH `/api/v1/plans/:id/`
+
+## PlanLogs
+
+### RunPlan
+
+POST `/api/v1/plans/:id/log/`
+
+### indexPlanLogs
+
+GET `/api/v1/plans/:id/log/`
 
