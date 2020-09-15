@@ -2,6 +2,14 @@
 
 ## Plan
 
+### Status
+
+Topic: `plans/:id/status`
+
+Field           | Type   | Description
+--------------- | ------ | -----------
+status          | string | Enum: `ready`, `error`, `protect`, `running`
+
 ### Term
 
 Topic: `plans/:id/term`
