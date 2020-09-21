@@ -1,245 +1,123 @@
 # Lua api
 
-## variable
+## Params
 
-### `node_id`
+**Lua version is 5.1**
+
+For Example:
+
+```lua
+function main(plan)
+end
+```
+
+The function `main()` params is `plan`
+
+## Object plan
+
+```lua
+plan:CleanDialog()
+
+ask_status = {
+  name = "确定要执行任务吗？",
+  buttons = {
+    {name = "不，手滑点错了", message = 'no', level = 'primary'},
+    {name = "是的，我要执行", message = 'yes', level = 'danger'},
+  }
+}
+plan:ToggleDialog(ask_status)
+
+if plan:Gets() ~= "yes" then
+  print("Task canceled")
+  return
+end
+plan:CleanDialog()
+
+plan:Puts("YYYYYYYYYY")
+
+print(plan:FileUrl("file"))
+```
+
+### ToggleDialog(table)
+
+Topic: `plans/:id/dialog`
+
+Send a confirmation form
+
+[params table reference](https://developer.sb.im/#/mqtt?id=dialog)
+
+### CleanDialog()
+
+Topic: `plans/:id/dialog`
+
+Close form
+
+### Gets()
+
+get `plans/:id/term` message
+
+### Puts(string)
+
+put `plans/:id/term` message
+
+### nodeID
 
 > The id of this current plan need `node`
 
-### `plan_id`
-
-> The id of this current plan
-
-### `plan_log_id`
-
-> The id of this current planLog
-
-## function
-
-### `rpc_notify`
-
-> jsonrpc Notification
-
-```go
-rpc_notify(id string, rpc table{ "method": string, "params": table }) \
-(error string)
-```
-
-name | type | description
----- | ---- | ----------
-<- id   | string | callee id
-<- rpc  | table  | `{ "method": string, "params": table}`
--> error| string | `""` Or `"xxxxxxxx"`
-
-About success
+## Class node
 
 ```lua
-local err = rpc_notify("233", {
-  ["method"] = "sbim"
-})
+local drone_id = plan.nodeID
+local drone = NewNode(drone_id)
 
-if err == ""
-then
-  print("Notify success")
-else
-  print("Notify failure")
-end
+local depot_id = drone:GetID()
+local depot = NewNode(depot_id)
+
+xpcall(function()
+  local promise = depot:AsyncCall("wait_to_boot_finish")
+  depot:SyncCall("power_on_drone")
+  depot:SyncCall("power_on_remote")
+
+  -- Block: get rpc result
+  local result = promise()
+
+end, function()
+  drone:SyncCall("emergency_stop")
+end)
+
+local data = drone:GetMsg("battery")
+
 ```
 
-### `rpc_call`
+### SyncCall(string [, table]) table
 
 > Sync jsonrpc call
 
-```go
-rpc_call(id string, rpc table{ "method": string, "params": table }) \
-(table{ "result": table{}, "error": "" }, error string)
-```
-
-name | type | description
----- | ---- | ----------
-<- id   | string | callee id
-<- rpc  | table  | `{ "method": string, "params": table}`
--> res  | table  | `{ "result": table{}, "error": table{} }`
--> error| string | `""` Or `"xxxxxxxx"`
-
-```lua
-local res, err = rpc_call("233", {
-  ["method"] = "sbim"
-})
-
-if err == ""
-then
-  print("rpc send success")
-else
-  print("rpc send failure")
-end
-
-
-if res["result"]
-then
-  print("rpc call success")
-else
-  print("rpc call failure")
-end
-```
-
-### `rpc_async`
+### AsyncCall(string [, table]) function() table
 
 > Async jsonrpc call
 
-```go
-rpc_async(id string, rpc table{ "method": string, "params": table{}}, LChannel) \
-(error string)
-```
+return a function
 
-name | type | description
----- | ---- | ----------
-<- id   | string | callee id
-<- rpc  | table  | `{ "method": string, "params": table}`
-<- ch   | LChannel | look like go channel
--> error| string | `""` Or `"xxxxxxxx"`
+### GetID([string]) string
 
-```lua
-local res, err = rpc_call("233", {
-  ["method"] = "sbim"
-})
+default params: `link_id`
 
+`GetID() == GetID("link_id")`
 
-ch = channel.make()
-local err = rpc_async(node_id, {
-  ["method"] = "test",
-  ["params"] = {
-    ["a"] = "233",
-    ["b"] = "456"
-  }
-}, ch)
+### GetStatus() table
 
-if err == ""
-then
-  print("rpc send success")
-else
-  print("rpc send failure")
-end
+`nodes/:id/status`
 
+### GetMsg(string) table
 
+`nodes/:id/msg/+`
 
-
-
-local res = {}
-
--- Block
-channel.select(
-{"|<-", ch, function(ok, data)
-  print(ok, data)
-  print(json.encode(data))
-
-  res = data
-end}
-)
-
-if res["result"]
-then
-  print("rpc call success")
-else
-  print("rpc call failure")
-end
-```
-
-### `get_status`
-
-> Get Status
-
-function:
-
-```go
-get_status() (data tables{}, error string)
-```
-
-params:
-
-name | type | description
----- | ---- | ----------
--> data | table  | `table{}`
--> error| string | `""` Or `"xxxxxxxx"`
-
-example:
+## sleep(string)
 
 ```lua
-local data, err = get_status()
-
-if err == ""
-then
-  print("get success")
-else
-  print("get failure")
-end
-
--- Print data
-print(json.encode(data))
+sleep("1ms")
 ```
 
-### `get_msg`
-
-> Get Message
-
-function:
-
-```go
-get_msg(id, msg string) (data tables{}, error string)
-```
-
-params:
-
-name | type | description
----- | ---- | ----------
-<- id   | string | callee id
-<- msg  | string | `weather`, `battery` ...
--> data | table  | `table{}`
--> error| string | `""` Or `"xxxxxxxx"`
-
-example:
-
-```lua
-local data, err = get_msg("8", "weather")
-
-if err == ""
-then
-  print("get success")
-else
-  print("get failure")
-end
-
--- Print data
-print(json.encode(data))
-```
-
-### `get_id`
-
-> Get various types of ID
-
-function:
-
-```go
-get_id(str string) (id string)
-```
-
-params:
-
-name | type | description
----- | ---- | ----------
-<- str  | string | Only support `link_id`
--> id   | string | id if `id == "0"` is No id
-
-example:
-
-```lua
-local id = get_id("link_id")
-
-if id ~= "0"
-then
-  print("get id" + id)
-else
-  print("No find id")
-end
-```
+such as "300ms", "-1.5h" or "2h45m". Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h" [golang time#ParseDuration](https://golang.org/pkg/time/#ParseDuration)
 
