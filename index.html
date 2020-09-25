@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/vue.css">
+    <link rel="stylesheet" href="theme.css">  <script src="//cdn.jsdelivr.net/npm/mermaid@8.7.0/dist/mermaid.min.js"></script>
   </head>
   <body>
     <div id="app"></div>
@@ -17,8 +18,27 @@ window.$docsify = {
   fallbackLanguages: ['zh-cn'],
   loadNavbar: 'NAVBAR.md',
   loadSidebar: 'SUMMARY.md',
-  subMaxLevel: 3
+  subMaxLevel: 3,
+  markdown: {
+    renderer: {
+      code: function(code, lang) {
+        if (lang === "mermaid") {
+          return (
+					  '<div class="mermaid">' + mermaid.render('mermaid-svg-' + num++, code) + "</div>"
+          );
+        }
+        return this.origin.code.apply(this, arguments);
+      }
+    }
+  }
 }
+
+var num = 0;
+const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+
+const conf = { logLevel:4, startOnLoad: false, themeCSS:'.label { font-family: Source Sans Pro,Helvetica Neue,Arial,sans-serif; }' };
+if(isDarkMode && false) conf.theme = 'dark';
+mermaid.initialize(conf);
 
     </script>
     <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>

@@ -1,4 +1,5 @@
 * [Home](/)
+* [Architecture](architecture.md)
 * [Http RESTful API](restful.md)
 * [Mqtt API](mqtt.md)
 * [Run Plan workflow for lua](lua_api.md)
