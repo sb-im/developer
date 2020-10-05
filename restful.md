@@ -113,7 +113,7 @@ curl -X POST -F "name=233" \
 	-F "description=test"
 	-F "node_id"=1 \
 	-F "file=@go.mod" \
-	localhost:8000/gosd/api/v1/plans
+	localhost:8000/gosd/api/v2/plans
 ```
 
 response
@@ -124,7 +124,7 @@ response
   "name":"233",
   "description":"test",
   "node_id":1,
-  "attachments": {
+  "files": {
     "file":"30"
   }
 }
@@ -136,7 +136,8 @@ id    | uint | Globally unique plan id
 name  | string | Name
 description | string | Description
 node_id | uint | Run Plan node
-attachments | object | `map[string]string` key is type, value is `blob_id`
+files | object | `map[string]string` key is type, value is `blob_id`
+extra | object | `map[string]string` key is type, value is text
 
 ### indexPlan
 
@@ -148,18 +149,15 @@ GET `/api/v1/plans/`
     "id":1,
     "name":"233",
     "description":"",
-    "map_path":"/api/v1/blobs/1",
     "node_id":1,
-    "cycle_types_id":0,
-    "attachments":{"file":"1"},
+    "files":{"file":"1"},
     "extra":{}
   },{
     "id":2,
     "name":"233","description":"",
     "map_path":"/api/v1/blobs/2",
     "node_id":1,
-    "cycle_types_id":0,
-    "attachments":{"file":"2"},
+    "files":{"file":"1"},
     "extra":{}
   }
 ]
@@ -173,13 +171,44 @@ DELETE `/api/v1/plans/:id/`
 
 PATCH `/api/v1/plans/:id/`
 
-## PlanLogs
+## Jobs
 
-### RunPlan
+### Run Job
 
-POST `/api/v1/plans/:id/log/`
+POST `/api/v2/plans/:id/jobs/`
 
-### indexPlanLogs
+### cancel Job
 
-GET `/api/v1/plans/:id/log/`
+POST `/api/v2/plans/:id/jobs/:job_id/cancel`
 
+Or:
+
+**(Not recommended for use)**
+
+DELETE `/api/v2/plans/:id/jobs/running`
+
+### indexPlanJobs
+
+GET `/api/v2/plans/:id/jobs/`
+
+```json
+[
+  {
+    "id":431,
+    "job_id":369,
+    "plan_id":0,
+    "files":{},
+    "extra":{},
+    "created_at":"2020-09-23T16:16:07.736495+08:00",
+    "updated_at":"2020-09-23T16:16:07.736495+08:00"
+  },{
+    "id":432,
+    "job_id":370,
+    "plan_id":0,
+    "files":{},
+    "extra":{},
+    "created_at":"2020-09-23T16:19:49.510395+08:00",
+    "updated_at":"2020-09-23T16:19:49.510395+08:00"
+  }
+]
+```
