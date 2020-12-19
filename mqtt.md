@@ -1,8 +1,31 @@
 # MQTT Topic
 
+## Node
+
+### NodeStatus
+
+Topic: `nodes/:id/status`
+
+Field           | Type   | Description
+--------------- | ------ | -----------
+msg             | string | Node Status Enum: `online`, `offline`, `neterror`
+status          | object |
+status.lat      | string |
+status.lng      | string |
+status.alt      | string |
+
+### NodeNetwork
+
+Topic: `nodes/:id/network`
+
+Field           | Type   | Description
+--------------- | ------ | -----------
+delay           | number | Network Delay [ms]
+loss            | number | packet loss (0~100)%
+
 ## Plan
 
-### Status
+### PlanStatus
 
 Topic: `plans/:id/status`
 
