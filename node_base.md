@@ -4,19 +4,6 @@ Built-in communication module
 
 ## jsonrpc2
 
-### shell
-
-```json
-{"jsonrpc":"2.0","method":"ncp","params":["shell", "stop"],"id":"test.0"}
-```
-
-### upload/download
-
-```json
-{"jsonrpc":"2.0","method":"ncp","params":["upload", "map", "https://staging.sblab.xyz/plans/1/map"],"id":"test.0"}
-{"jsonrpc":"2.0","method":"ncp","params":["download", "map", "https://staging.sblab.xyz/plans/1/map"],"id":"test.0"}
-```
-
 ### history
 
 params:
