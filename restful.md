@@ -100,32 +100,78 @@ points | array | How many features are available
 points.type   | string | Enum: reference SDWC
 points.params | object | reference SDWC
 
+## Blob
+
+### createBlob
+
+POST `/api/v2/blobs/`
+
+```bash
+curl -X POST \
+-F c1=@go.mod \
+-F c2=@go.sum \
+localhost:8000/gosd/api/v2/blobs/ \
+-H "Authorization: Bearer 6b6e69e4e3166d3433bed7412bd3c2caf4fd6aebf7ae7b03834c8494e6c4cf27"
+```
+
+```json
+{"c1":"8","c2":"9"}
+```
+
+Key is Any value
+
+**NOTE: value must String**
+
+### destroyBlob
+
+DELETE `/api/v2/blobs/:id`
+
+```bash
+curl -X DELETE \
+localhost:8000/gosd/api/v2/blobs/1 \
+-H "Authorization: Bearer 6b6e69e4e3166d3433bed7412bd3c2caf4fd6aebf7ae7b03834c8494e6c4cf27"
+```
+
 ## Plan
 
 ### createPlan
 
-POST `/api/v1/plans/`
+POST `/api/v2/plans/`
 
-FormData
-
-```sh
-curl -X POST -F "name=233" \
-	-F "description=test"
-	-F "node_id"=1 \
-	-F "file=@go.mod" \
-	localhost:8000/gosd/api/v2/plans
+```bash
+curl -X POST localhost:8000/gosd/api/v2/plans/ \
+-H "Authorization: Bearer 6b6e69e4e3166d3433bed7412bd3c2caf4fd6aebf7ae7b03834c8494e6c4cf27" \
+-H 'content-type: application/json' \
+-d '{
+  "name":"233",
+  "description":"test",
+  "node_id":1,
+  "files": {
+    "file":"30"
+  },
+  "extra":{
+    "key1":"value1",
+    "key2":"value2",
+    "key3":"value3"
+  }
+}'
 ```
 
 response
 
 ```json
 {
-  "id":35,
-  "name":"233",
-  "description":"test",
-  "node_id":1,
+  "id": 35,
+  "name": "233",
+  "description": "test",
+  "node_id": 1,
   "files": {
-    "file":"30"
+    "file": "30"
+  },
+  "extra":{
+    "key1": "value1",
+    "key2": "value2",
+    "key3": "value3"
   }
 }
 ```
@@ -141,35 +187,45 @@ extra | object | `map[string]string` key is type, value is text
 
 ### indexPlan
 
-GET `/api/v1/plans/`
+GET `/api/v2/plans/`
 
 ```json
 [
   {
-    "id":1,
-    "name":"233",
-    "description":"",
-    "node_id":1,
-    "files":{"file":"1"},
-    "extra":{}
+    "id": 1,
+    "name": "233",
+    "description": "",
+    "node_id": 1,
+    "files": {
+      "file": "1"
+    },
+    "extra": {null}
   },{
-    "id":2,
-    "name":"233","description":"",
-    "map_path":"/api/v1/blobs/2",
-    "node_id":1,
-    "files":{"file":"1"},
-    "extra":{}
+    "id": 2,
+    "name": "233",
+    "description": "",
+    "node_id": 1,
+    "files": {
+      "file": "1"
+    },
+    "extra":{
+      "key1": "value1",
+      "key2": "value2",
+      "key3": "value3"
+    }
   }
 ]
 ```
 
-### destroyPlan
-
-DELETE `/api/v1/plans/:id/`
-
 ### updatePlan
 
-PATCH `/api/v1/plans/:id/`
+PUT `/api/v2/plans/:id`
+
+**Only PUT**
+
+### destroyPlan
+
+DELETE `/api/v2/plans/:id`
 
 ## Jobs
 
