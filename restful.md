@@ -1,5 +1,17 @@
 # gosd RESTful API
 
+## Alive
+
+> Not Auth, Is Alive
+
+```bash
+curl localhost:8000/gosd/api/v2/ok
+```
+
+```json
+{"ok":"2021-01-16 17:55:51.768278076 +0800 CST m=+3.689842946"}
+```
+
 ## Auth
 
 ### Oauth
