@@ -134,6 +134,37 @@ Key is Any value
 
 **NOTE: value must String**
 
+### updateBlob
+
+PUT `/api/v2/blobs/:id`
+
+```bash
+curl -X PUT \
+-F c=@go.mod \
+localhost:8000/gosd/api/v2/blobs/20 \
+-H "Authorization: Bearer 6b6e69e4e3166d3433bed7412bd3c2caf4fd6aebf7ae7b03834c8494e6c4cf27"
+```
+
+```json
+{"id":20,"filename":"go.mod"}
+```
+
+`c` Can be any value
+
+```bash
+curl -X PUT \
+-F c=@go.mod \
+-F c2=@go.sum \
+localhost:8000/gosd/api/v2/blobs/20 \
+-H "Authorization: Bearer 6b6e69e4e3166d3433bed7412bd3c2caf4fd6aebf7ae7b03834c8494e6c4cf27"
+```
+
+```json
+{"id":20,"filename":"go.mod"}
+```
+
+**If has Multiple file, Random select a file**
+
 ### destroyBlob
 
 DELETE `/api/v2/blobs/:id`
