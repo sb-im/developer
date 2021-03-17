@@ -234,9 +234,9 @@ default params: `link_id`
 
 ## Geo
 
-a Object, Geography util
+Geography util. a Object
 
-### Distance(number, number, number, number) number
+### Distance(aLng, aLat, bLng, bLat number) number
 
 2D Distance measurement
 
@@ -260,5 +260,6 @@ end
 sleep("1ms")
 ```
 
-such as "300ms", "-1.5h" or "2h45m". Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h" [golang time#ParseDuration](https://golang.org/pkg/time/#ParseDuration)
+such as "300ms", "-1.5h" or "2h45m".
+Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h" [golang time#ParseDuration](https://golang.org/pkg/time/#ParseDuration)
 
