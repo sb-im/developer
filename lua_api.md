@@ -113,6 +113,28 @@ default params: `link_id`
 
 `nodes/:id/msg/+`
 
+## Geo
+
+a Object, Geography util
+
+### Distance(number, number, number, number) number
+
+2D Distance measurement
+
+`Geo:Distance(aLng, aLat, bLng, bLat)`
+
+```lua
+-- 114.2247765, 22.6857991
+-- 114.22475167, 22.68580217
+-- = 2.57202994
+local distance = Geo:Distance(114.2247765, 22.6857991, 114.22475167, 22.68580217)
+if math.floor(distance) == 2 then
+  print("Distance:", distance)
+else
+  error("Distance sum error:", distance)
+end
+```
+
 ## sleep(string)
 
 ```lua
