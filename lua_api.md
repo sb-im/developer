@@ -95,18 +95,6 @@ plan:Puts("test2")
 
 ### Notification(msg string, level = 5)
 
-Topic: `plans/:id/notification`
-
-```json
-{"time":1565413755,"level":1,"msg":""}
-```
-
-Name | Type   | Description
----- | ------ | -----------
-time | uint64 | unix timestamp length `10`
-level| uint   | 0-7 `0: Emergency, 1: Alert, 2: Critical, 3: Error, 4: Warn, 5: Notice, 6: Info, 7: Debug` Reference: [RFC5424](https://tools.ietf.org/html/rfc5424#section-6.2.1)
-msg  | string | message body
-
 ```lua
 plan:Notification("notification")
 

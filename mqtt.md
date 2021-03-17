@@ -25,19 +25,73 @@ loss            | number | packet loss (0~100)%
 
 ## Plan
 
-### PlanStatus
+### Running
 
-Topic: `plans/:id/status`
+Topic: `plans/:id/running`
+
+If This plan not running:
+
+```json
+{}
+```
+
+If This plan running:
+
+```json
+{
+  "files":{},
+  "extra":{},
+  "job":{
+    "job_id":1,
+    "files":{},
+    "extra":{}
+  }
+}
+```
 
 Field           | Type   | Description
 --------------- | ------ | -----------
-status          | string | Enum: `ready`, `error`, `protect`, `running`
+`files`         | map[string]string | `key/blob_id`
+`extra`         | map[string]string | `key/value`
+`job`           | Object            | This plan run log
+`job.job_id`    | int64             | `plan_id` + `job_id` == `job.id`
+`job.files`     | map[string]string | Job `key/blob_id`
+`job.extra`     | map[string]string | Job `key/value`
 
 ### Term
 
 Topic: `plans/:id/term`
 
-> Any data
+> Any data, **NOTE: not json, may be plain**
+
+### Notification
+
+Topic: `plans/:id/notification`
+
+```json
+{"time":1565413755,"level":1,"msg":""}
+```
+
+Field | Type   | Description
+----  | ------ | -----------
+time  | uint64 | unix timestamp length `10`
+level | uint   | 0-7 `levelEnum`
+msg   | string | message body
+
+levelEnum: 0-7
+
+level | Name
+----- | ----
+0     | Emergency
+1     | Alert
+2     | Critical
+3     | Error
+4     | Warn
+5     | Notice
+6     | Info
+7     | Debug
+
+Reference: [RFC5424](https://tools.ietf.org/html/rfc5424#section-6.2.1)
 
 ### Dialog
 
