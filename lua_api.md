@@ -21,18 +21,18 @@ This is Plan, Only `main()` params
 plan:CleanDialog()
 
 ask_status = {
-    name = "ARE YOU OK ?",
-    buttons = {
-      {name = "Fine, thank you.", message = 'fine', level = 'primary'},
-      {name = "I feel bad.", message = 'bad', level = 'danger'},
-    }
+  name = "ARE YOU OK ?",
+  buttons = {
+    {name = "Fine, thank you.", message = 'fine', level = 'primary'},
+    {name = "I feel bad.", message = 'bad', level = 'danger'},
   }
+}
 plan:ToggleDialog(ask_status)
 
 msg, err = plan:Gets()
 if err ~= nil then
-	print(msg)
-	print(json.encode(err))
+  print(msg)
+  print(json.encode(err))
 end
 
 plan:CleanDialog()
@@ -50,12 +50,12 @@ Send a confirmation form
 
 ```lua
 ask_status = {
-    name = "ARE YOU OK ?",
-    buttons = {
-      {name = "Fine, thank you.", message = 'fine', level = 'primary'},
-      {name = "I feel bad.", message = 'bad', level = 'danger'},
-    }
+  name = "ARE YOU OK ?",
+  buttons = {
+    {name = "Fine, thank you.", message = 'fine', level = 'primary'},
+    {name = "I feel bad.", message = 'bad', level = 'danger'},
   }
+}
 plan:ToggleDialog(ask_status)
 ```
 
