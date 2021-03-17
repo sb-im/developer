@@ -61,9 +61,9 @@ plan:ToggleDialog(ask_status)
 
 ### CleanDialog()
 
-Close form
+Close Dialog
 
-Topic: `plans/:id/dialog`
+Topic: `plans/:id/dialog` message `{}`
 
 ```lua
 plan:CleanDialog()
@@ -73,9 +73,25 @@ plan:CleanDialog()
 
 get `plans/:id/term` message
 
+```lua
+print(plan:Gets())
+
+msg, err = plan:Gets()
+if err ~= nil then
+  print(msg)
+  print(json.encode(err))
+end
+```
+
 ### Puts(string)
 
 put `plans/:id/term` message
+
+```lua
+plan:Puts("test")
+sleep("1s")
+plan:Puts("test2")
+```
 
 ### nodeID
 
