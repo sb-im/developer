@@ -338,9 +338,37 @@ response
 
 POST `/api/v2/plans/:id/jobs/`
 
+> Run This plan
+
+```bash
+curl -X POST localhost:8000/gosd/api/v2/plans/1/jobs/ \
+-H "Authorization: Bearer 6b6e69e4e3166d3433bed7412bd3c2caf4fd6aebf7ae7b03834c8494e6c4cf27"
+```
+
+response
+
+```json
+{
+  "id":4,
+  "job_id":3,
+  "plan_id":1,
+  "files":{},
+  "extra":{},
+  "created_at":"2021-03-20T09:02:20.386117Z",
+  "updated_at":"2021-03-20T09:02:20.386117Z"
+}
+```
+
 ### cancel Job
 
 POST `/api/v2/plans/:id/jobs/:job_id/cancel`
+
+> Emergency, stop
+
+```bash
+curl -X POST localhost:8000/gosd/api/v2/plans/3/jobs/cancel \
+-H "Authorization: Bearer 6b6e69e4e3166d3433bed7412bd3c2caf4fd6aebf7ae7b03834c8494e6c4cf27"
+```
 
 Or:
 
