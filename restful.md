@@ -266,9 +266,71 @@ PUT `/api/v2/plans/:id`
 
 **Only PUT**
 
+```bash
+curl -X PUT localhost:8000/gosd/api/v2/plans/1 \
+-H "Authorization: Bearer 6b6e69e4e3166d3433bed7412bd3c2caf4fd6aebf7ae7b03834c8494e6c4cf27" \
+-H 'content-type: application/json' \
+-d '{
+  "name":"233",
+  "description":"test",
+  "node_id":1,
+  "files": {
+    "file":"30"
+  },
+  "extra":{
+    "key1":"value1",
+    "key2":"value2",
+    "key3":"value3"
+  }
+}'
+```
+
+response
+
+```json
+{
+  "id": 1,
+  "name": "233",
+  "description": "test",
+  "node_id": 1,
+  "files": {
+    "file": "30"
+  },
+  "extra":{
+    "key1": "value1",
+    "key2": "value2",
+    "key3": "value3"
+  }
+}
+```
+
 ### destroyPlan
 
 DELETE `/api/v2/plans/:id`
+
+```bash
+curl -X DELETE localhost:8000/gosd/api/v2/plans/1 \
+-H "Authorization: Bearer 6b6e69e4e3166d3433bed7412bd3c2caf4fd6aebf7ae7b03834c8494e6c4cf27" \
+```
+
+response
+
+```json
+{
+  "id": 1,
+  "name": "233",
+  "description": "test",
+  "node_id": 1,
+  "files": {
+    "file": "30"
+  },
+  "extra":{
+    "key1": "value1",
+    "key2": "value2",
+    "key3": "value3"
+  }
+}
+```
 
 ## Jobs
 
