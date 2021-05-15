@@ -256,6 +256,126 @@ default params: `link_id`
 
 `nodes/:id/msg/+`
 
+## Log
+
+### NewLog([fnLine, fnWord function])
+
+```lua
+local log = NewLog()
+
+-- Or
+
+local log = NewLog(function(line, nu)
+  return tostring(nu) .. ": \t" .. os.date("%Y/%m/%d %H:%M:%S") .. " " .. line
+end)
+
+-- Or
+
+local log = NewLog(function(line, nu)
+  return tostring(nu) .. ": \t" .. os.date("%Y/%m/%d %H:%M:%S") .. " " .. line
+end,
+function(word, nu)
+  if type(word) == "table" then
+    return json.encode(word)
+  end
+  return tostring(word)
+end)
+```
+
+### fnLine(string, number) string
+
+> Every line hook function
+
+Default: if `fnLine == nil`
+
+```lua
+if fnLine == nil then
+  fnLine = function(line, nu)
+    return tostring(nu) .. ": " .. line
+  end
+end
+```
+
+### fnWord(any, number) string
+
+> Every word hook function
+
+Default: if `fnWord == nil`
+
+```lua
+if fnWord == nil then
+  fnWord = function(word, nu)
+    return tostring(word)
+  end
+end
+```
+
+### Println(...)
+
+> Print auto add `\n`
+
+```lua
+log:Println("xxxxx")
+log:Println("xxxxx", "xxxxx", "xxxxx", "xxxxx")
+log:Println(1, "xxxxx")
+print(log:GetContent())
+```
+
+```lua
+function test_log()
+  local log = NewLog()
+  log:Println("xxxxx")
+  log:Println("xxxxx")
+  log:Println("xxxxx", "xxxxx")
+  log:Println("xxxxx", "xxxxx", "xxxxx")
+  log:Println("xxxxx", "xxxxx", "xxxxx", "xxxxx")
+  log:Println(1, "xxxxx")
+  print(log:GetContent())
+end
+
+function test_logfn()
+  local log = NewLog(function(line, nu)
+    return tostring(nu) .. ": \t" .. os.date("%Y/%m/%d %H:%M:%S") .. " " .. line
+  end)
+  log:Println("xxxxx")
+  log:Println(1, "xxxxx")
+  for i=10,1,-1 do
+    log:Println(i, "ccccc")
+  end
+  print(log:GetContent())
+end
+```
+
+### GetContent() string
+
+> Get All Content
+
+```lua
+_raw_print = print
+local log = NewLog(function(line, nu)
+  return tostring(nu) .. ": \t" .. os.date("%Y/%m/%d %H:%M:%S") .. " " .. line
+end,
+function(word, nu)
+  if type(word) == "table" then
+    return json.encode(word)
+  end
+  return tostring(word)
+end)
+print = function(...)
+  _raw_print(unpack(arg))
+  log:Println(unpack(arg))
+end
+
+function main(plan)
+  print("=== START Lua ===")
+
+  -- Your workflow
+
+  print("=== END Lua END ===")
+  plan:SetJobFileContent("luavm", "luavm.txt", log:GetContent())
+end
+```
+
 ## Geo
 
 Geography util. a Object
