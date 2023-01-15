@@ -1,0 +1,3 @@
+[submodule "gosd"]
+	path = gosd
+	url = https://github.com/sb-im/gosd.git
