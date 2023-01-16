@@ -2,11 +2,15 @@
 default: all
 
 .PHONY: all
-all: update gosd
+all: init update gosd
 
 .PHONY: run
 run:
 	python3 -m http.server 8888
+
+.PHONY: init
+init:
+	git submodule update --init --recursive
 
 .PHONY: update
 update:
