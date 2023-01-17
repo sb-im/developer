@@ -9,6 +9,8 @@ const engine = new Liquid({
   extname: '.liquid',
 })
 
+const theme = "docsify/themes/vue.css"
+
 const assets = [
   "docsify/lib/docsify.min.js",
   "docsify/lib/plugins/search.min.js",
@@ -16,6 +18,8 @@ const assets = [
   "prismjs/components/prism-go.min.js",
   "prismjs/components/prism-lua.min.js",
   "prismjs/components/prism-bash.min.js",
+  "mermaid/dist/mermaid.min.js",
+  "mermaid/dist/mermaid.min.js.map",
 ]
 
 function addPrefix(i) {
@@ -23,11 +27,12 @@ function addPrefix(i) {
 }
 
 const ctx = {
+  theme: addPrefix(theme),
   assets: assets.map(i => addPrefix(i))
 }
 
 async function main () {
-  assets.map(async asset => {
+  [theme, ...assets].map(async asset => {
     await mkdir(path.parse(addPrefix(asset)).dir, { recursive: true })
     await copyFile(`./node_modules/${asset}`, addPrefix(asset))
   })

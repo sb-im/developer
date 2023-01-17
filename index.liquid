@@ -4,11 +4,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/vue.css">
-    <link rel="stylesheet" href="theme.css">  <script src="//cdn.jsdelivr.net/npm/mermaid@8.7.0/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="{{ theme }}">
   </head>
   <body>
     <div id="app"></div>
+    {% for asset in assets %}
+      <script src="{{ asset }}"></script>
+    {% endfor %}
     <script>
 
 window.$docsify = {
@@ -41,9 +43,5 @@ if(isDarkMode && false) conf.theme = 'dark';
 mermaid.initialize(conf);
 
     </script>
-
-    {% for asset in assets %}
-      <script src="{{ asset }}"></script>
-    {% endfor %}
   </body>
 </html>
