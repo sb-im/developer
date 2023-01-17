@@ -24,7 +24,7 @@ window.$docsify = {
       code: function(code, lang) {
         if (lang === "mermaid") {
           return (
-					  '<div class="mermaid">' + mermaid.render('mermaid-svg-' + num++, code) + "</div>"
+            '<div class="mermaid">' + mermaid.render('mermaid-svg-' + num++, code) + "</div>"
           );
         }
         return this.origin.code.apply(this, arguments);
@@ -41,11 +41,9 @@ if(isDarkMode && false) conf.theme = 'dark';
 mermaid.initialize(conf);
 
     </script>
-    <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-json.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-go.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-lua.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-bash.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+
+    {% for asset in assets %}
+      <script src="{{ asset }}"></script>
+    {% endfor %}
   </body>
 </html>

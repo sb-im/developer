@@ -2,7 +2,7 @@
 default: all
 
 .PHONY: all
-all: init update gosd
+all: init update gosd build
 
 .PHONY: run
 run:
@@ -20,4 +20,12 @@ update:
 gosd:
 	cp gosd/docs/lua.md gosd_lua.md
 	cp gosd/docs/mqtt.md gosd_mqtt.md
+
+.PHONY: build
+build:
+	node index.js
+
+.PHONY: clean
+clean:
+	rm -r assets/npm
 

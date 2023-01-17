@@ -1,0 +1,8 @@
+{
+  "type": "module",
+  "devDependencies": {
+    "docsify": "^4.13.0",
+    "liquidjs": "^10.4.0",
+    "prismjs": "^1.29.0"
+  }
+}
