@@ -4,9 +4,9 @@ default: all
 .PHONY: all
 all: init update gosd build
 
-.PHONY: preview
-preview:
-	python3 -m http.server 8888
+.PHONY: dev
+dev:
+	npm run dev
 
 .PHONY: init
 init:

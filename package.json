@@ -1,9 +1,13 @@
 {
   "type": "module",
+  "scripts": {
+    "dev": "sirv --maxage 0"
+  },
   "devDependencies": {
     "docsify": "^4.13.0",
     "liquidjs": "^10.4.0",
     "mermaid": "^9.3.0",
-    "prismjs": "^1.29.0"
+    "prismjs": "^1.29.0",
+    "sirv-cli": "^2.0.2"
   }
 }
