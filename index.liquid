@@ -8,11 +8,7 @@
   </head>
   <body>
     <div id="app"></div>
-    {% for asset in assets %}
-      <script src="{{ asset }}"></script>
-    {% endfor %}
     <script>
-
 window.$docsify = {
   repo: 'sb-im',
   name: 'SB developer',
@@ -21,27 +17,10 @@ window.$docsify = {
   loadNavbar: 'NAVBAR.md',
   loadSidebar: 'SUMMARY.md',
   subMaxLevel: 3,
-  markdown: {
-    renderer: {
-      code: function(code, lang) {
-        if (lang === "mermaid") {
-          return (
-            '<div class="mermaid">' + mermaid.render('mermaid-svg-' + num++, code) + "</div>"
-          );
-        }
-        return this.origin.code.apply(this, arguments);
-      }
-    }
-  }
 }
-
-var num = 0;
-const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
-
-const conf = { logLevel:4, startOnLoad: false, themeCSS:'.label { font-family: Source Sans Pro,Helvetica Neue,Arial,sans-serif; }' };
-if(isDarkMode && false) conf.theme = 'dark';
-mermaid.initialize(conf);
-
     </script>
+    {% for asset in assets %}
+      <script src="{{ asset }}"></script>
+    {% endfor %}
   </body>
 </html>

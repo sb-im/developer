@@ -5,6 +5,7 @@
   },
   "devDependencies": {
     "docsify": "^4.13.0",
+    "docsify-mermaid": "^1.0.0",
     "liquidjs": "^10.4.0",
     "mermaid": "^9.3.0",
     "prismjs": "^1.29.0",

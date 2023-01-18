@@ -19,7 +19,7 @@ const assets = [
   "prismjs/components/prism-lua.min.js",
   "prismjs/components/prism-bash.min.js",
   "mermaid/dist/mermaid.min.js",
-  "mermaid/dist/mermaid.min.js.map",
+  "docsify-mermaid/dist/docsify-mermaid.js",
 ]
 
 function addPrefix(i) {
