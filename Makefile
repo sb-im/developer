@@ -2,7 +2,7 @@
 default: all
 
 .PHONY: all
-all: init update gosd build
+all: init update build gosd
 
 .PHONY: preview
 preview:
