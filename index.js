@@ -9,8 +9,6 @@ const engine = new Liquid({
   extname: '.liquid',
 })
 
-const theme = "docsify/themes/vue.css"
-
 const assets = [
   "docsify/lib/docsify.min.js",
   "docsify/lib/plugins/search.min.js",
@@ -27,12 +25,11 @@ function addPrefix(i) {
 }
 
 const ctx = {
-  theme: addPrefix(theme),
   assets: assets.map(i => addPrefix(i))
 }
 
 async function main () {
-  [theme, ...assets].map(async asset => {
+  assets.map(async asset => {
     await mkdir(path.parse(addPrefix(asset)).dir, { recursive: true })
     await copyFile(`./node_modules/${asset}`, addPrefix(asset))
   })
