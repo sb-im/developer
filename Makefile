@@ -18,9 +18,9 @@ update:
 
 .PHONY: gosd
 gosd:
-	cp -r gosd/docs/ public/gosd
-	#cp gosd/docs/lua.md gosd_lua.md
-	#cp gosd/docs/mqtt.md gosd_mqtt.md
+	#cp -r gosd/docs/ public/gosd
+	cp gosd/docs/lua.md public/gosd_lua.md
+	cp gosd/docs/mqtt.md public/gosd_mqtt.md
 
 .PHONY: build
 build:

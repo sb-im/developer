@@ -36,7 +36,7 @@ async function main () {
 
   await cp('docs', outDir, { recursive: true })
   await cp('README.md', path.join(outDir, 'home.md'))
-
+  //await cp(path.join('gosd', 'docs'), path.join(outDir, 'gosd'), { recursive: true })
 
   // CDN node_modules
   assets.map(async asset => {
