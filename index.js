@@ -1,9 +1,10 @@
-import { writeFile, copyFile, mkdir } from 'node:fs/promises'
+import { writeFile, copyFile, mkdir, cp } from 'node:fs/promises'
 import path from 'node:path'
 
 import { Liquid } from 'liquidjs'
 
 const prefix = 'assets/npm'
+const outDir = 'public'
 
 const engine = new Liquid({
   extname: '.liquid',
@@ -29,13 +30,22 @@ const ctx = {
 }
 
 async function main () {
+  await mkdir(outDir, { recursive: true })
+
+  await cp('assets', path.join(outDir, 'assets'), { recursive: true })
+
+  await cp('docs', outDir, { recursive: true })
+  await cp('README.md', path.join(outDir, 'home.md'))
+
+
+  // CDN node_modules
   assets.map(async asset => {
-    await mkdir(path.parse(addPrefix(asset)).dir, { recursive: true })
-    await copyFile(`./node_modules/${asset}`, addPrefix(asset))
+    await mkdir(path.parse(path.join(outDir, addPrefix(asset))).dir, { recursive: true })
+    await copyFile(`./node_modules/${asset}`, path.join(outDir, addPrefix(asset)))
   })
 
   const html = await engine.renderFile('index', ctx)
-  await writeFile("index.html", html)
+  await writeFile(path.join(outDir, 'index.html'), html)
 }
 
 await main()

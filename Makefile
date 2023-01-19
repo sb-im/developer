@@ -4,9 +4,9 @@ default: all
 .PHONY: all
 all: init update gosd build
 
-.PHONY: dev
-dev:
-	npm run dev
+.PHONY: preview
+preview:
+	npm run preview
 
 .PHONY: init
 init:
@@ -18,8 +18,9 @@ update:
 
 .PHONY: gosd
 gosd:
-	cp gosd/docs/lua.md gosd_lua.md
-	cp gosd/docs/mqtt.md gosd_mqtt.md
+	cp -r gosd/docs/ public/gosd
+	#cp gosd/docs/lua.md gosd_lua.md
+	#cp gosd/docs/mqtt.md gosd_mqtt.md
 
 .PHONY: build
 build:
@@ -27,5 +28,5 @@ build:
 
 .PHONY: clean
 clean:
-	rm -r assets/npm
+	rm -r public
 
